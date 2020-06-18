@@ -44,5 +44,19 @@ public:
 	void Resume();
 };
 
+class TitleState :public State
+{
+public:
+
+	TitleState();
+	void Update();
+	void Render();
+	void Enter();
+	void Exit();
+private:
+	Button* m_playBtn;
+	Button* m_quitBtn;
+
+};
 
 #endif

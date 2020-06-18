@@ -46,7 +46,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/background.png", "background");
 	TEMA::RegisterTexture("Img/sprites.png", "sprites");
 
-	STMA::ChangeState(new PlayState);
+	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Success!" << endl;
 	SOMA::AllocateChannels(16);

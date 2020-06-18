@@ -65,3 +65,29 @@ public:
 	// Add more members later.
 };
 
+class Button : public Sprite
+{
+public:
+	int Update();
+protected: // Private but inherited!
+	Button(SDL_Rect src, SDL_Rect dst);
+	enum state { STATE_UP, STATE_OVER, STATE_DOWN } m_state;
+	bool MouseCollision();
+	virtual void Execute() = 0; // Pure virtual method, meaning Button is now an abstract class (interface)!
+};
+
+class PlayButton : public Button
+{
+private:
+	void Execute();
+public:
+	PlayButton(SDL_Rect src, SDL_Rect dst);
+};
+class QuitButton : public Button
+{
+private:
+	void Execute();
+public:
+	QuitButton(SDL_Rect src, SDL_Rect dst);
+};
+

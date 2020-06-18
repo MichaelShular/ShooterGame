@@ -1,11 +1,1 @@
-﻿  Engine.cpp
-  EventManager.cpp
-  FontManager.cpp
-  Main.cpp
-  SoundManager.cpp
-  Sprites.cpp
-  StateManager.cpp
-  States.cpp
-  TextureManager.cpp
-  코드를 생성하고 있습니다...
-  GAME1017_ShooterExample.vcxproj -> D:\GAME1017_ShooterExample\Debug\GAME1017_ShooterExample.exe
+﻿  GAME1017_ShooterExample.vcxproj -> D:\겜펀-슈팅\ShooterGame\GAME1017_ShooterExample\Debug\GAME1017_ShooterExample.exe

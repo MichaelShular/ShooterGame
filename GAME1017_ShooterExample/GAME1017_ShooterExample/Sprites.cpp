@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "StateManager.h"
 using namespace std;
 
 Sprite::Sprite(){}
@@ -64,3 +65,65 @@ void Enemy::Update()
 	}
 }
 
+Button::Button(SDL_Rect s, SDL_Rect d)
+	: Sprite(s, d), m_state(STATE_UP) {}
+
+
+bool Button::MouseCollision()
+{
+	const int mx = EVMA::GetMousePos().x;
+	const int my = EVMA::GetMousePos().y;
+	return (mx < (m_rDst.x + m_rDst.w) && mx > m_rDst.x &&
+		my < (m_rDst.y + m_rDst.h) && my > m_rDst.y);
+}
+
+int Button::Update()
+{
+	bool col = MouseCollision();
+	switch (m_state)
+	{
+	case STATE_UP:
+		if (col)
+			m_state = STATE_OVER;
+		break;
+	case STATE_OVER:
+		if (!col)
+			m_state = STATE_UP;
+		else if (col && EVMA::MousePressed(1))
+			m_state = STATE_DOWN;
+		break;
+	case STATE_DOWN:
+		if (EVMA::MouseReleased(1))
+		{
+			if (col)
+			{
+				m_state = STATE_OVER;
+				
+				Execute();
+				return 1;
+			}
+			else
+				m_state = STATE_UP;
+		}
+		break;
+	}
+	return 0;
+}
+
+PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void PlayButton::Execute()
+{
+	//SOMA::SetSoundVolume(60);
+	SOMA::PlaySound("laser");
+	STMA::ChangeState(new PlayState);
+}
+
+QuitButton::QuitButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void QuitButton::Execute()
+{
+	SOMA::PlaySound("laser");
+	Engine::Instance().Running() = false;
+
+}

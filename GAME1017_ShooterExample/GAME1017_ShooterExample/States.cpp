@@ -225,4 +225,43 @@ void PlayState::Resume()
 {
 
 }
-// End TitleState.
+
+TitleState::TitleState() {
+
+
+}
+
+void TitleState::Enter()
+{
+
+	m_playBtn = new PlayButton({ 0,0,480,140 }, { 380,350,240,70 });
+	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 380,420,240,70 });
+
+}
+
+void TitleState::Update()
+{
+
+	if (m_playBtn->Update() == 1)
+		return;
+	if (m_quitBtn->Update() == 1)
+		return;
+}
+
+void TitleState::Render()
+{
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("background"), nullptr, nullptr);
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
+		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
+	State::Render();
+
+	//SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 0, 255, 255);
+	//SDL_RenderClear(Engine::Instance().GetRenderer());
+
+	State::Render();
+}
+
+void TitleState::Exit()
+{
+	std::cout << "Exiting TitleState..." << std::endl;
+}
