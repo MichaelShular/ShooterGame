@@ -5,8 +5,6 @@
 #include <SDL.h>
 #include "Sprites.h"
 
-
-
 class State // This is the abstract base class for all specific states.
 {
 protected:
@@ -31,9 +29,6 @@ private:
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;
 	std::vector<Bullet*> m_vEBullets;
-	
-
-
 public:
 	PlayState();
 	void Update();
@@ -44,5 +39,18 @@ public:
 	void Resume();
 };
 
+class TitleState : public State
+{
+private:
+	StartButton* m_startBtn;
+public:
+	TitleState();
+	void Render();
+	void Enter();
+	void Update();
+	void Exit();
+	void Resume();
+
+};
 
 #endif

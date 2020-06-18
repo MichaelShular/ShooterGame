@@ -226,3 +226,35 @@ void PlayState::Resume()
 
 }
 // End TitleState.
+
+TitleState::TitleState() {}
+
+
+void TitleState::Render()
+{
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("title"), nullptr, nullptr);
+	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("startButton"), m_startBtn->GetSrcP(), m_startBtn->GetDstP(), m_startBtn->GetAngle(), 0, SDL_FLIP_NONE);
+	State::Render();
+}
+
+void TitleState::Enter()
+{
+	m_startBtn = new StartButton({ 0,0,94,100 }, { 256,384 - 50,94,100 });
+	SOMA::Load("Aud/game_sound.wav", "BGM", SOUND_MUSIC);
+	SOMA::SetMusicVolume(16);
+}
+
+void TitleState::Update()
+{
+	if (m_startBtn->Update() == 1)
+		return;
+}
+
+void TitleState::Exit()
+{
+}
+
+void TitleState::Resume()
+{
+}
+

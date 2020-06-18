@@ -2,6 +2,7 @@
 #include <vector>
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include "States.h"
 using namespace std;
 
 class Sprite
@@ -64,4 +65,26 @@ public:
 	void Update();
 	// Add more members later.
 };
+
+class Button : public Sprite
+{
+protected:
+	enum state { STATE_UP, STATE_OVER, STATE_DOWN } m_state;
+	bool MouseCollision();
+	virtual void Excute() = 0;
+public:
+	Button(SDL_Rect s, SDL_Rect d);
+	int Update();
+};
+
+class StartButton : public Button
+{
+private:
+	void Excute();
+public:
+	StartButton(SDL_Rect s, SDL_Rect d); 
+
+};
+
+
 

@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "EventManager.h"
 using namespace std;
 
 Sprite::Sprite(){}
@@ -64,3 +65,57 @@ void Enemy::Update()
 	}
 }
 
+bool Button::MouseCollision()
+{
+	const int mx = EVMA::GetMousePos().x;
+	const int my = EVMA::GetMousePos().y;
+	return (mx < (m_rDst.x + m_rDst.w) && mx > m_rDst.x &&
+		my < (m_rDst.y + m_rDst.h) && my > m_rDst.y);
+}
+
+Button::Button(SDL_Rect s, SDL_Rect d): Sprite(s, d) , m_state(STATE_UP)
+{
+
+}
+
+int Button::Update()
+{
+	bool col = MouseCollision();
+	switch (m_state)
+	{
+	case STATE_UP:
+		if (col)
+			m_state = STATE_OVER;
+		break;
+	case STATE_OVER:
+		if (!col)
+			m_state = STATE_UP;
+		else if (col && EVMA::MousePressed(1))
+			m_state = STATE_DOWN;
+		break;
+	case STATE_DOWN:
+		if (EVMA::MouseReleased(1))
+		{
+			if (col)
+			{
+				m_state = STATE_OVER;
+				// Execute new "callback".
+				Excute();
+				return 1;
+			}
+			else
+				m_state = STATE_UP;
+		}
+		break;
+	}
+	return 0;
+}
+
+void StartButton::Excute()
+{
+	STMA::ChangeState(new PlayState);
+}
+
+StartButton::StartButton(SDL_Rect s, SDL_Rect d) :Button(s ,d)
+{
+}

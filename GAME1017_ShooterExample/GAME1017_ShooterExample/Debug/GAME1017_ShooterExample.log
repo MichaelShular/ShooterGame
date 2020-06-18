@@ -1,11 +1,86 @@
 ﻿  Engine.cpp
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C3646: 'bgArray': unknown override specifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C2143: syntax error: missing ',' before '['
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2143: syntax error: missing ')' before ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,18): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,14): error C2065: 'Enemy': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,20): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,25): error C2238: unexpected token(s) preceding ';'
   EventManager.cpp
-  FontManager.cpp
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C3646: 'bgArray': unknown override specifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C2143: syntax error: missing ',' before '['
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2143: syntax error: missing ')' before ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,18): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,14): error C2065: 'Enemy': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,20): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,25): error C2238: unexpected token(s) preceding ';'
   Main.cpp
-  SoundManager.cpp
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C3646: 'bgArray': unknown override specifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C2143: syntax error: missing ',' before '['
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2143: syntax error: missing ')' before ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,18): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,14): error C2065: 'Enemy': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,20): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,25): error C2238: unexpected token(s) preceding ';'
   Sprites.cpp
-  StateManager.cpp
-  States.cpp
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C3646: 'bgArray': unknown override specifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C2143: syntax error: missing ',' before '['
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2143: syntax error: missing ')' before ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,18): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,14): error C2065: 'Enemy': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,20): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,25): error C2238: unexpected token(s) preceding ';'
   TextureManager.cpp
-  코드를 생성하고 있습니다...
-  GAME1017_ShooterExample.vcxproj -> D:\GAME1017_ShooterExample\Debug\GAME1017_ShooterExample.exe
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C3646: 'bgArray': unknown override specifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,16): error C2143: syntax error: missing ',' before '['
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2143: syntax error: missing ')' before ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(23,19): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(24,18): error C2238: unexpected token(s) preceding ';'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,14): error C2065: 'Enemy': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(29,20): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(30,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,14): error C2065: 'Bullet': undeclared identifier
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(31,21): error C2059: syntax error: '>'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C2143: syntax error: missing ';' before '*'
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,13): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Dio\Desktop\GAME1017_ShooterGame\ShooterGame\GAME1017_ShooterExample\GAME1017_ShooterExample\States.h(45,25): error C2238: unexpected token(s) preceding ';'
+  Generating Code...

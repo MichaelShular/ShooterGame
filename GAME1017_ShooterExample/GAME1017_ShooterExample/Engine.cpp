@@ -46,7 +46,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/background.png", "background");
 	TEMA::RegisterTexture("Img/sprites.png", "sprites");
 
-	STMA::ChangeState(new PlayState);
+	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Success!" << endl;
 	SOMA::AllocateChannels(16);
@@ -71,10 +71,6 @@ void Engine::HandleEvents()
 	EVMA::HandleEvents();
 }
 
-void Engine::CheckCollision()
-{
-	
-}
 
 /* Update is SUPER way too long on purpose! Part of the Assignment 1, if you use
    this program as a start project is to chop up Update and figure out where each

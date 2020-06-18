@@ -37,7 +37,6 @@ public: // Public methods.
 	Engine();
 	~Engine();
 	void HandleEvents();
-	void CheckCollision();
 	int Run();
 	static Engine& Instance();
 	SDL_Renderer* GetRenderer();
