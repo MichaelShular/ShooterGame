@@ -41,6 +41,9 @@ void PlayState::Enter()
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
 	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
 	m_playerStartX = m_player->GetSrcP()->x;
+	double adfv = 223;
+	int aaro = 42;
+	int arfg = 24; 
 }
 
 void PlayState::Update()
