@@ -26,7 +26,8 @@ private:
 	Player* m_player;
 	SDL_Point m_pivot;
 	int m_iESpawn, // The enemy spawn frame timer properties.
-		m_iESpawnMax;
+		m_iESpawnMax,
+		m_playerStartX; // need for animations that dont start at zero x 
 	bool m_bENull, m_bPBNull, m_bEBNull, m_bCanShoot;
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;

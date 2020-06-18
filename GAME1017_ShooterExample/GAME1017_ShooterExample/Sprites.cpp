@@ -22,7 +22,7 @@ AnimatedSprite::AnimatedSprite(int a, int fm, int sm, SDL_Rect s, SDL_Rect d) :
 	m_iSprite = m_iFrame = 0; // Chaining assignments to the same value.
 }
 
-void AnimatedSprite::Animate()
+void AnimatedSprite::Animate(int x)
 {
 	m_iFrame++;
 	if (m_iFrame == m_iFrameMax)
@@ -34,16 +34,17 @@ void AnimatedSprite::Animate()
 			m_iSprite = 0;
 		}
 	}
-	m_rSrc.x = m_rSrc.w * m_iSprite;
+	m_rSrc.x = x + (m_rSrc.w * m_iSprite);
 }
 
-Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 8, 4, s, d) {}
+Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 16, 8, s, d) {}
 
 Bullet::Bullet(SDL_Rect s, SDL_Rect d, int spd) :
 	Sprite(s, d), m_speed(spd), m_active(true) {}
 
 void Bullet::Update()
 {
+	
 	m_rDst.x += m_speed;
 }
 
@@ -54,7 +55,7 @@ m_pBulletVec(bVec),  m_bulletTimer(0), m_timerMax(fr) {}
 
 void Enemy::Update()
 {
-	Animate();
+	Animate( 1);
 	m_rDst.x -= 3;
 	if (m_bulletTimer++ == m_timerMax)
 	{

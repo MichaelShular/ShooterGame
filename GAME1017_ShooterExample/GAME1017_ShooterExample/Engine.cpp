@@ -45,6 +45,8 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/quitButtons.png", "quit");
 	TEMA::RegisterTexture("Img/background.png", "background");
 	TEMA::RegisterTexture("Img/sprites.png", "sprites");
+	TEMA::RegisterTexture("Img/0x72.png", "0x72");
+	TEMA::RegisterTexture("Img/parallax-mountain-bg.png", "titleBG");
 
 	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.

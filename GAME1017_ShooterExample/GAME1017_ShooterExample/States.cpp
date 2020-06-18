@@ -36,11 +36,11 @@ void PlayState::Enter()
 {
 	bgArray[0] = { {0,0,1024,768}, {0, 0, 1024, 768} };
 	bgArray[1] = { {0,0,1024,768}, {1024, 0, 1024, 768} };
-	m_player = new Player({ 0,0,94,100 }, { 256,384 - 50,94,100 });
+	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
 	SOMA::Load("Aud/enemy.wav", "enemy", SOUND_SFX);
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
 	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
-
+	m_playerStartX = m_player->GetSrcP()->x;
 }
 
 void PlayState::Update()
@@ -54,7 +54,7 @@ void PlayState::Update()
 		bgArray[1].GetDstP()->x = 1024;
 	}
 	// Player animation/movement.
-	m_player->Animate(); // Oh! We're telling the player to animate itself. This is good! Hint hint.
+	m_player->Animate(m_playerStartX); // Oh! We're telling the player to animate itself. This is good! Hint hint.
 	if (EVMA::KeyHeld(SDL_SCANCODE_A) && m_player->GetDstP()->x > m_player->GetDstP()->h)
 		m_player->GetDstP()->x -= PSPEED;
 	else if (EVMA::KeyHeld(SDL_SCANCODE_D) && m_player->GetDstP()->x < WIDTH / 2)
@@ -186,7 +186,7 @@ void PlayState::Render()
 	for (int i = 0; i < 2; i++)
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("background"), bgArray[i].GetSrcP(), bgArray[i].GetDstP());
 	// Player.
-	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("sprites"), m_player->GetSrcP(), m_player->GetDstP(), m_player->GetAngle(), &m_pivot, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_player->GetSrcP(), m_player->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
 	/*SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 128);
 	SDL_RenderFillRect(m_pRenderer, m_player->GetDstP());*/
@@ -250,7 +250,7 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("background"), nullptr, nullptr);
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), nullptr, nullptr);
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
 		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
 	State::Render();
