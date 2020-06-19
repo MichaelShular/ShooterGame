@@ -3,8 +3,8 @@
 #include <ctime>
 
 
-#define WIDTH 1024
-#define HEIGHT 768
+#define WIDTH 1280
+#define HEIGHT 720
 #define FPS 60
 #define BGSCROLL 2 // Could these scroll/speed values be handled in the class? Yes. Consider it!
 #define PSPEED 6
@@ -46,7 +46,14 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/background.png", "background");
 	TEMA::RegisterTexture("Img/sprites.png", "sprites");
 	TEMA::RegisterTexture("Img/0x72.png", "0x72");
+	TEMA::RegisterTexture("Img/EnergyBall.png", "EnergyBall");
 	TEMA::RegisterTexture("Img/parallax-mountain-bg.png", "titleBG");
+	TEMA::RegisterTexture("Img/parallax-mountain-foreground-trees.png", "treeClose");
+	TEMA::RegisterTexture("Img/parallax-mountain-montain-far.png", "montainFar");
+	TEMA::RegisterTexture("Img/parallax-mountain-mountains.png", "montainClose");
+	TEMA::RegisterTexture("Img/parallax-mountain-trees.png", "treeFar");
+
+
 
 	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.

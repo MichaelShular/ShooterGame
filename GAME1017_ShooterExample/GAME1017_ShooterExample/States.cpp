@@ -12,7 +12,7 @@ using namespace std;
 #define WIDTH 1024
 #define HEIGHT 768
 #define FPS 60
-#define BGSCROLL 2 // Could these scroll/speed values be handled in the class? Yes. Consider it!
+#define BGSCROLL 2// Could these scroll/speed values be handled in the class? Yes. Consider it!
 #define PSPEED 6
 
 // Begin State. CTRL+M+H and CTRL+M+U to turn on/off collapsed code.
@@ -34,8 +34,12 @@ PlayState::PlayState() :m_iESpawn(0), m_iESpawnMax(60), m_pivot({ 0,0 }) {
 
 void PlayState::Enter() 
 {
-	bgArray[0] = { {0,0,1024,768}, {0, 0, 1024, 768} };
-	bgArray[1] = { {0,0,1024,768}, {1024, 0, 1024, 768} };
+	for (int f = 0; f < 5; f++)
+	{
+		bgArray[f*3] = { {0,0,1280,720}, {0, 0, 1280, 720} };
+		bgArray[f*3+1] = { {0,0,1280,720}, {1280, 0, 1280, 720} };
+		bgArray[f*3+2] = { {0,0,1280,720}, {-1280, 0, 1280, 720} };
+	}
 	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
 	SOMA::Load("Aud/enemy.wav", "enemy", SOUND_SFX);
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
@@ -49,12 +53,28 @@ void PlayState::Enter()
 void PlayState::Update()
 {
 	// Scroll the backgrounds. Check if they need to snap back.
-	for (int i = 0; i < 2; i++)
-		bgArray[i].GetDstP()->x -= BGSCROLL;
-	if (bgArray[1].GetDstP()->x <= 0)
+	
+	for (int f = 0; f < 5; f++)
 	{
-		bgArray[0].GetDstP()->x = 0;
-		bgArray[1].GetDstP()->x = 1024;
+			bgArray[f*3].GetDstP()->x -= m_srollBG[f];
+			bgArray[f*3+1].GetDstP()->x -= m_srollBG[f];
+			bgArray[f*3+2].GetDstP()->x -= m_srollBG[f];
+	}
+	for (int f = 0; f < 5; f++)
+	{
+		if (bgArray[f*3+2].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3 + 2].GetDstP()->x = 1280;
+	
+		}
+		if (bgArray[f * 3 + 1].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3 + 1].GetDstP()->x = 1280;
+		}
+		if (bgArray[f * 3].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3].GetDstP()->x = 1280;
+		}
 	}
 	// Player animation/movement.
 	m_player->Animate(m_playerStartX); // Oh! We're telling the player to animate itself. This is good! Hint hint.
@@ -69,7 +89,7 @@ void PlayState::Update()
 	if (EVMA::KeyHeld(SDL_SCANCODE_SPACE) && m_bCanShoot)
 	{
 		m_bCanShoot = false;
-		m_vPBullets.push_back(new Bullet({ 376,0,10,100 }, { m_player->GetDstP()->x + 85,m_player->GetDstP()->y + 42,10,100 }, 30));
+		m_vPBullets.push_back(new Bullet({ 0,0,128,128 }, { m_player->GetDstP()->x + 85,m_player->GetDstP()->y + 42, 50,50 }, 30));
 		//Mix_PlayChannel(-1, m_vSounds[1], 0);
 		
 	}
@@ -186,9 +206,27 @@ void PlayState::Render()
 	SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 0, 0, 0, 255);
 	SDL_RenderClear(Engine::Instance().GetRenderer()); // Clear the screen with the draw color.
 	// Render stuff. Background first.
-	for (int i = 0; i < 2; i++)
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("background"), bgArray[i].GetSrcP(), bgArray[i].GetDstP());
-	// Player.
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), bgArray[i].GetSrcP(), bgArray[i].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("montainFar"), bgArray[i+3].GetSrcP(), bgArray[i+3].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("montainClose"), bgArray[i + 6].GetSrcP(), bgArray[i + 6].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeFar"), bgArray[i + 9].GetSrcP(), bgArray[i + 9].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeClose"), bgArray[i + 12].GetSrcP(), bgArray[i + 12].GetDstP());
+	}
+		// Player.
 	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_player->GetSrcP(), m_player->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
 	/*SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 128);
@@ -196,7 +234,7 @@ void PlayState::Render()
 	// Player bullets.	
 	for (int i = 0; i < (int)m_vPBullets.size(); i++)
 	{
-		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("sprites"), m_vPBullets[i]->GetSrcP(), m_vPBullets[i]->GetDstP(), 90, &m_pivot, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("EnergyBall"), m_vPBullets[i]->GetSrcP(), m_vPBullets[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
 		/*SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 128);
 		SDL_RenderFillRect(m_pRenderer, m_vPBullets[i]->GetDstP());*/
 	}
@@ -253,7 +291,7 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), nullptr, nullptr);
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), 0, 0);
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
 		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
 	State::Render();

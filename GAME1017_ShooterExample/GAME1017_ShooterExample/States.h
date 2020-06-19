@@ -22,7 +22,7 @@ public:
 class PlayState : public State
 {
 private:
-	Sprite bgArray[2];
+	Sprite bgArray[15];
 	Player* m_player;
 	SDL_Point m_pivot;
 	int m_iESpawn, // The enemy spawn frame timer properties.
@@ -32,7 +32,7 @@ private:
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;
 	std::vector<Bullet*> m_vEBullets;
-	
+	int m_srollBG[5] = {1, 2, 4, 5, 6};
 
 
 public:
