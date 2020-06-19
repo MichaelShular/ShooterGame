@@ -9,10 +9,10 @@
 #include <iostream>
 #include <ctime>
 using namespace std;
-#define WIDTH 1024
-#define HEIGHT 768
+#define WIDTH 1280
+#define HEIGHT 720
 #define FPS 60
-#define BGSCROLL 2// Could these scroll/speed values be handled in the class? Yes. Consider it!
+#define BGSCROLL 2 // Could these scroll/speed values be handled in the class? Yes. Consider it!
 #define PSPEED 6
 
 // Begin State. CTRL+M+H and CTRL+M+U to turn on/off collapsed code.
@@ -89,7 +89,7 @@ void PlayState::Update()
 	if (EVMA::KeyHeld(SDL_SCANCODE_SPACE) && m_bCanShoot)
 	{
 		m_bCanShoot = false;
-		m_vPBullets.push_back(new Bullet({ 0,0,128,128 }, { m_player->GetDstP()->x + 85,m_player->GetDstP()->y + 42, 50,50 }, 30));
+		m_vPBullets.push_back(new Bullet({ 0,0,128,128 }, { m_player->GetDstP()->x + 16,m_player->GetDstP()->y + 10, 50, 50 }, 30));
 		//Mix_PlayChannel(-1, m_vSounds[1], 0);
 		
 	}
@@ -149,7 +149,7 @@ void PlayState::Update()
 void PlayState::CheckCollision()
 {
 	// Player vs. Enemy.
-	SDL_Rect p = { m_player->GetDstP()->x - 100, m_player->GetDstP()->y, 100, 94 };
+	SDL_Rect p = { m_player->GetDstP()->x - 20, m_player->GetDstP()->y , 32, 44 };
 	for (int i = 0; i < (int)m_vEnemies.size(); i++)
 	{
 		SDL_Rect e = { m_vEnemies[i]->GetDstP()->x, m_vEnemies[i]->GetDstP()->y - 40, 56, 40 };
@@ -164,7 +164,7 @@ void PlayState::CheckCollision()
 	// Player bullets vs. Enemies.
 	for (int i = 0; i < (int)m_vPBullets.size(); i++)
 	{
-		SDL_Rect b = { m_vPBullets[i]->GetDstP()->x - 100, m_vPBullets[i]->GetDstP()->y, 100, 10 };
+		SDL_Rect b = { m_vPBullets[i]->GetDstP()->x - 25, m_vPBullets[i]->GetDstP()->y, 50, 50 };
 		for (int j = 0; j < (int)m_vEnemies.size(); j++)
 		{
 			if (m_vEnemies[j] == nullptr) continue;
@@ -274,9 +274,9 @@ TitleState::TitleState() {
 
 void TitleState::Enter()
 {
-
-	m_playBtn = new PlayButton({ 0,0,480,140 }, { 380,350,240,70 });
-	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 380,420,240,70 });
+	
+	m_playBtn = new PlayButton({ 0,0,480,140 }, { 400, 768 / 2,240,70 });
+	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
 
 }
 
@@ -294,6 +294,8 @@ void TitleState::Render()
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), 0, 0);
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
 		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+		m_quitBtn->GetSrcP(), m_quitBtn->GetDstP());
 	State::Render();
 
 	//SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 0, 255, 255);
