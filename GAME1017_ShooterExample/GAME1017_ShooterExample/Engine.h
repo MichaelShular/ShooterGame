@@ -22,14 +22,14 @@ private: // Private properties.
 	Uint32 m_start, m_end, m_delta, m_fps; // Fixed timestep variables.
 	SDL_Window* m_pWindow; // This represents the SDL window.
 	SDL_Renderer* m_pRenderer; // This represents the buffer to draw to.
-
+	bool m_pPause;
 
 
 private: // Private methods.
 	bool Init(const char* title, int xpos, int ypos, int width, int height, int flags);
 	void Wake();
 	void Sleep();
-
+	
 	void Update();
 	void Render();
 	void Clean();
@@ -42,5 +42,6 @@ public: // Public methods.
 	static Engine& Instance();
 	SDL_Renderer* GetRenderer();
 	bool& Running();
+	bool& Pause();
 	
 };

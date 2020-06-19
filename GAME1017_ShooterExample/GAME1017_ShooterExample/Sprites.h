@@ -90,4 +90,17 @@ private:
 public:
 	QuitButton(SDL_Rect src, SDL_Rect dst);
 };
-
+class PauseButton : public Button
+{
+private:
+	void Execute();
+public:
+	PauseButton(SDL_Rect src, SDL_Rect dst);
+};
+class ResumeButton : public Button
+{
+private:
+	void Execute();
+public:
+	ResumeButton(SDL_Rect src, SDL_Rect dst);
+};

@@ -14,6 +14,7 @@ Engine::Engine()
 {	// Again showing a mix of either initializers or in-body initialization. Initializers happen first.
 	m_bRunning = false; // Setting all to false.
 	cout << "Engine class constructed!" << endl; 
+	m_pPause = false;
 }
 Engine::~Engine(){}
 
@@ -91,7 +92,9 @@ void Engine::CheckCollision()
    their own behaviour and this is a big hint for you. */
 void Engine::Update()
 {
+	
 	STMA::Update();
+	
 }
 
 /* In the render I commented out some lines that rendered the original destination rectangles
@@ -152,6 +155,11 @@ SDL_Renderer* Engine::GetRenderer()
 bool& Engine::Running()
 {
 	return m_bRunning;
+}
+
+bool& Engine::Pause()
+{
+	return m_pPause;
 }
 
 

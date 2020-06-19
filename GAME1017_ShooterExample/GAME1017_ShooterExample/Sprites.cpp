@@ -128,3 +128,17 @@ void QuitButton::Execute()
 	Engine::Instance().Running() = false;
 
 }
+
+PauseButton::PauseButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void PauseButton::Execute()
+{
+	Engine::Instance().Pause() = true;
+}
+
+ResumeButton::ResumeButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void ResumeButton::Execute()
+{
+	Engine::Instance().Pause() = false;
+}

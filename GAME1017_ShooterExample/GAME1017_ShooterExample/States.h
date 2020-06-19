@@ -33,8 +33,9 @@ private:
 	std::vector<Bullet*> m_vPBullets;
 	std::vector<Bullet*> m_vEBullets;
 	int m_srollBG[5] = {1, 2, 4, 5, 6};
-
-
+	Button* m_pauseBtn;
+	Button* m_resumeBtn;
+	Button* m_quitBtn;
 public:
 	PlayState();
 	void Update();
