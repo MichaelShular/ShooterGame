@@ -29,18 +29,25 @@ PlayState::PlayState() :m_iESpawn(0), m_iESpawnMax(60), m_pivot({ 0,0 }) {
 	m_bENull = false;
 	m_bPBNull = false;
 	m_bCanShoot = true;
+	m_Hp = 8;
 	srand((unsigned)time(NULL));
 }
 
-void PlayState::Enter() 
+void PlayState::Enter()
 {
 	for (int f = 0; f < 5; f++)
 	{
-		bgArray[f*3] = { {0,0,1280,720}, {0, 0, 1280, 720} };
-		bgArray[f*3+1] = { {0,0,1280,720}, {1280, 0, 1280, 720} };
-		bgArray[f*3+2] = { {0,0,1280,720}, {-1280, 0, 1280, 720} };
+		bgArray[f * 3] = { {0,0,1280,720}, {0, 0, 1280, 720} };
+		bgArray[f * 3 + 1] = { {0,0,1280,720}, {1280, 0, 1280, 720} };
+		bgArray[f * 3 + 2] = { {0,0,1280,720}, {-1280, 0, 1280, 720} };
 	}
-	m_pauseBtn = new PauseButton({ 0,0,480,140 }, { 0, 0, 240,70 });
+
+	Hp[0] = { { 289, 258, 13, 12 }, { 1000 , 725, 65, 60 } };
+	Hp[1] = { { 289, 258, 13, 12 }, { 1070 , 725, 65, 60 } };
+	Hp[2] = { { 289, 258, 13, 12 }, { 1140 , 725, 65, 60 } };
+	Hp[3] = { { 289, 258, 13, 12 }, { 1210 , 725, 65, 60 } };
+		
+	m_pauseBtn = new PauseButton({ 0,0,480,140 }, { 0, HEIGHT, 240,60 });
 	m_resumeBtn = new ResumeButton({ 0,0,480,140 }, { 520, 230, 240,70 });
 	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 520, 300, 240, 70 });
 
@@ -65,6 +72,53 @@ void PlayState::Update()
 		if (m_quitBtn->Update() == 1)
 			return;
 	}
+	if (m_Hp == 7)
+	{
+		Hp[0].GetSrcP()->x = 305;
+	}
+	if (m_Hp == 6)
+	{
+		Hp[0].GetSrcP()->x = 321;
+
+	}
+	if (m_Hp == 5)
+	{
+		Hp[1].GetSrcP()->x = 305;
+
+	}
+	if (m_Hp == 4)
+	{
+		Hp[1].GetSrcP()->x = 321;
+
+	}
+	if (m_Hp == 3)
+	{
+		Hp[2].GetSrcP()->x = 305;
+
+	}
+	if (m_Hp == 2)
+	{
+		Hp[2].GetSrcP()->x = 321;
+
+	}
+	if (m_Hp == 1)
+	{
+		Hp[3].GetSrcP()->x = 305;
+
+	}
+	if (m_Hp == 0)
+	{
+		Hp[3].GetSrcP()->x = 321;
+		m_player->GetSrcP()->x = 371;
+		m_player->GetSrcP()->y = 82;
+		m_player->GetSrcP()->w = 10;
+		m_player->GetSrcP()->h = 16;
+
+	}
+
+
+
+
 	if (EVMA::KeyHeld(SDL_SCANCODE_X))
 	{
 		Engine::Instance().Pause() = true;
@@ -95,7 +149,11 @@ void PlayState::Update()
 			}
 		}
 		// Player animation/movement.
-		m_player->Animate(m_playerStartX); // Oh! We're telling the player to animate itself. This is good! Hint hint.
+		if (m_Hp > 0)
+			m_player->Animate(m_playerStartX); // Oh! We're telling the player to animate itself. This is good! Hint hint.
+		
+		if (m_Hp < 1)
+			m_player->Animate(371, 6);
 		if (EVMA::KeyHeld(SDL_SCANCODE_A) && m_player->GetDstP()->x > m_player->GetDstP()->h)
 			m_player->GetDstP()->x -= PSPEED;
 		else if (EVMA::KeyHeld(SDL_SCANCODE_D) && m_player->GetDstP()->x < WIDTH / 2)
@@ -111,7 +169,7 @@ void PlayState::Update()
 		{
 			m_bCanShoot = false;
 			m_vPBullets.push_back(new Bullet({ 0,0,128,128 }, { m_player->GetDstP()->x + 16,m_player->GetDstP()->y + 10, 50, 50 }, 30));
-			//Mix_PlayChannel(-1, m_vSounds[1], 0);
+			SOMA::PlaySound("laser");
 
 		}
 		if (EVMA::KeyReleased(SDL_SCANCODE_SPACE))
@@ -134,8 +192,8 @@ void PlayState::Update()
 		// Update enemy spawns.
 		if (m_iESpawn++ == m_iESpawnMax)
 		{
-			m_vEnemies.push_back(new Enemy({ 0,100,40,56 }, { WIDTH,56 + rand() % (HEIGHT - 114),40,56 }, &m_vEBullets,
-				30 + rand() % 91)); // Randomizing enemy bullet spawn to every 30-120 frames.
+			m_vEnemies.push_back(new Enemy({ 21,366,22,33 }, { WIDTH,56 + rand() % (HEIGHT - 114),44,66 }, &m_vEBullets,
+				50 + rand() % 91)); // Randomizing enemy bullet spawn to every 30-120 frames.
 			m_iESpawn = 0;
 		}
 		// Update the bullets. Player's first.
@@ -176,15 +234,20 @@ void PlayState::CheckCollision()
 	SDL_Rect p = { m_player->GetDstP()->x - 20, m_player->GetDstP()->y , 32, 44 };
 	for (int i = 0; i < (int)m_vEnemies.size(); i++)
 	{
-		SDL_Rect e = { m_vEnemies[i]->GetDstP()->x, m_vEnemies[i]->GetDstP()->y - 40, 56, 40 };
+		SDL_Rect e = { m_vEnemies[i]->GetDstP()->x, m_vEnemies[i]->GetDstP()->y +5, 44,60 };
 		if (SDL_HasIntersection(&p, &e))
 		{
+			delete m_vEnemies[i];
+			m_vEnemies[i] = nullptr;
 			// Game over!
 			cout << "Player goes boom!" << endl;
 			SOMA::PlaySound("explode");
+			m_bENull = true;
+			--m_Hp;
 			break;
 		}
 	}
+	if (m_bENull) CleanVector<Enemy*>(m_vEnemies, m_bENull);
 	// Player bullets vs. Enemies.
 	for (int i = 0; i < (int)m_vPBullets.size(); i++)
 	{
@@ -192,7 +255,7 @@ void PlayState::CheckCollision()
 		for (int j = 0; j < (int)m_vEnemies.size(); j++)
 		{
 			if (m_vEnemies[j] == nullptr) continue;
-			SDL_Rect e = { m_vEnemies[j]->GetDstP()->x, m_vEnemies[j]->GetDstP()->y - 40, 56, 40 };
+			SDL_Rect e = { m_vEnemies[j]->GetDstP()->x, m_vEnemies[j]->GetDstP()->y +5, 44, 60 };
 			if (SDL_HasIntersection(&b, &e))
 			{
 				SOMA::PlaySound("explode");
@@ -219,6 +282,7 @@ void PlayState::CheckCollision()
 			delete m_vEBullets[i];
 			m_vEBullets[i] = nullptr;
 			CleanVector<Bullet*>(m_vEBullets, m_bEBNull);
+			--m_Hp;
 			break;
 		}
 	}
@@ -256,7 +320,10 @@ void PlayState::Render()
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
 			m_pauseBtn->GetSrcP(), m_pauseBtn->GetDstP());
 	}
-
+	for (int i = 0; i < 4; ++i) 
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), Hp[i].GetSrcP(), Hp[i].GetDstP());
+	}
 
 
 		// Player.
@@ -275,7 +342,7 @@ void PlayState::Render()
 	// Enemies.
 	for (int i = 0; i < (int)m_vEnemies.size(); i++)
 	{
-		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("sprites"), m_vEnemies[i]->GetSrcP(), m_vEnemies[i]->GetDstP(), -90, &m_pivot, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_vEnemies[i]->GetSrcP(), m_vEnemies[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_HORIZONTAL);
 		/*SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 128);
 		SDL_RenderFillRect(m_pRenderer, m_vEnemies[i]->GetDstP());*/
 	}
@@ -315,7 +382,12 @@ TitleState::TitleState() {
 
 void TitleState::Enter()
 {
-	
+	for (int f = 0; f < 5; f++)
+	{
+		bgArray[f * 3] = { {0,0,1280,720}, {0, 0, 1280, 720} };
+		bgArray[f * 3 + 1] = { {0,0,1280,720}, {1280, 0, 1280, 720} };
+		bgArray[f * 3 + 2] = { {0,0,1280,720}, {-1280, 0, 1280, 720} };
+	}
 	m_playBtn = new PlayButton({ 0,0,480,140 }, { 400, 768 / 2,240,70 });
 	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
 
@@ -323,7 +395,28 @@ void TitleState::Enter()
 
 void TitleState::Update()
 {
+	for (int f = 0; f < 5; f++)
+	{
+		bgArray[f * 3].GetDstP()->x -= m_srollBG[f];
+		bgArray[f * 3 + 1].GetDstP()->x -= m_srollBG[f];
+		bgArray[f * 3 + 2].GetDstP()->x -= m_srollBG[f];
+	}
+	for (int f = 0; f < 5; f++)
+	{
+		if (bgArray[f * 3 + 2].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3 + 2].GetDstP()->x = 1280;
 
+		}
+		if (bgArray[f * 3 + 1].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3 + 1].GetDstP()->x = 1280;
+		}
+		if (bgArray[f * 3].GetDstP()->x <= -1280)
+		{
+			bgArray[f * 3].GetDstP()->x = 1280;
+		}
+	}
 	if (m_playBtn->Update() == 1)
 		return;
 	if (m_quitBtn->Update() == 1)
@@ -332,7 +425,27 @@ void TitleState::Update()
 
 void TitleState::Render()
 {
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), 0, 0);
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), bgArray[i].GetSrcP(), bgArray[i].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("montainFar"), bgArray[i + 3].GetSrcP(), bgArray[i + 3].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("montainClose"), bgArray[i + 6].GetSrcP(), bgArray[i + 6].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeFar"), bgArray[i + 9].GetSrcP(), bgArray[i + 9].GetDstP());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeClose"), bgArray[i + 12].GetSrcP(), bgArray[i + 12].GetDstP());
+	}
+	
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
 		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),

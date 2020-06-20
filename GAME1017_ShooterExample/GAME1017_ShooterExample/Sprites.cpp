@@ -22,7 +22,7 @@ AnimatedSprite::AnimatedSprite(int a, int fm, int sm, SDL_Rect s, SDL_Rect d) :
 	m_iSprite = m_iFrame = 0; // Chaining assignments to the same value.
 }
 
-void AnimatedSprite::Animate(int x)
+void AnimatedSprite::Animate(int startPosition,int betweenSprite)
 {
 	m_iFrame++;
 	if (m_iFrame == m_iFrameMax)
@@ -34,7 +34,9 @@ void AnimatedSprite::Animate(int x)
 			m_iSprite = 0;
 		}
 	}
-	m_rSrc.x = x + (m_rSrc.w * m_iSprite);
+	
+		m_rSrc.x = startPosition + ((m_rSrc.w + betweenSprite) * m_iSprite);
+	
 }
 
 Player::Player(SDL_Rect s, SDL_Rect d) : AnimatedSprite(90, 16, 8, s, d) {}
@@ -55,12 +57,12 @@ m_pBulletVec(bVec),  m_bulletTimer(0), m_timerMax(fr) {}
 
 void Enemy::Update()
 {
-	Animate( 1);
+	Animate(21,10);
 	m_rDst.x -= 3;
 	if (m_bulletTimer++ == m_timerMax)
 	{
 		m_bulletTimer = 0;
-		m_pBulletVec->push_back(new Bullet({ 160,100,14,14 }, { m_rDst.x,m_rDst.y - 28,14,14 }, -10));
+		m_pBulletVec->push_back(new Bullet({ 160,100,14,14 }, { m_rDst.x,m_rDst.y + 22,14,14 }, -7));
 		
 		SOMA::PlaySound("enemy");
 	}

@@ -22,12 +22,14 @@ public:
 class PlayState : public State
 {
 private:
+	Sprite Hp[4];
 	Sprite bgArray[15];
 	Player* m_player;
 	SDL_Point m_pivot;
 	int m_iESpawn, // The enemy spawn frame timer properties.
 		m_iESpawnMax,
-		m_playerStartX; // need for animations that dont start at zero x 
+		m_playerStartX, // need for animations that dont start at zero x 
+		m_Hp;
 	bool m_bENull, m_bPBNull, m_bEBNull, m_bCanShoot;
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;
@@ -58,7 +60,8 @@ public:
 private:
 	Button* m_playBtn;
 	Button* m_quitBtn;
-
+	Sprite bgArray[15];
+	int m_srollBG[5] = { 1, 2, 4, 5, 6 };
 };
 
 #endif

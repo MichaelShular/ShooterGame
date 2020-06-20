@@ -32,7 +32,7 @@ protected:
 
 public:
 	AnimatedSprite(int a, int fm, int sm, SDL_Rect s, SDL_Rect d);
-	void Animate(int x);
+	void Animate(int startPosition, int betweenSprite = 0);
 };
 
 class Player : public AnimatedSprite

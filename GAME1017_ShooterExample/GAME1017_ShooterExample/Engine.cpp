@@ -4,7 +4,7 @@
 
 
 #define WIDTH 1280
-#define HEIGHT 720
+#define HEIGHT 800
 #define FPS 60
 #define BGSCROLL 2 // Could these scroll/speed values be handled in the class? Yes. Consider it!
 #define PSPEED 6
