@@ -104,3 +104,10 @@ private:
 public:
 	ResumeButton(SDL_Rect src, SDL_Rect dst);
 };
+class MenuButton : public Button
+{
+private:
+	void Execute();
+public:
+	MenuButton(SDL_Rect src, SDL_Rect dst);
+};

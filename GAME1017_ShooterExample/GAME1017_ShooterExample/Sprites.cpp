@@ -144,3 +144,10 @@ void ResumeButton::Execute()
 {
 	Engine::Instance().Pause() = false;
 }
+
+void MenuButton::Execute()
+{
+	STMA::ChangeState(new TitleState);
+}
+
+MenuButton::MenuButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}

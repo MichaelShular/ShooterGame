@@ -53,9 +53,6 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/parallax-mountain-montain-far.png", "montainFar");
 	TEMA::RegisterTexture("Img/parallax-mountain-mountains.png", "montainClose");
 	TEMA::RegisterTexture("Img/parallax-mountain-trees.png", "treeFar");
-
-
-
 	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Success!" << endl;

@@ -63,5 +63,16 @@ private:
 	Sprite bgArray[15];
 	int m_srollBG[5] = { 1, 2, 4, 5, 6 };
 };
+class LoseState : public State
+{
+private:
+	Button* m_MenuBtn;
+public:
+	LoseState();
+	void Update();
+	void Render();
+	void Enter();
+	void Exit();
+};
 
 #endif

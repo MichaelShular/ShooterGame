@@ -55,6 +55,10 @@ void PlayState::Enter()
 	SOMA::Load("Aud/enemy.wav", "enemy", SOUND_SFX);
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
 	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
+	SOMA::Load("Aud/game_sound.wav", "PBGM", SOUND_MUSIC);
+	SOMA::SetMusicVolume(15);
+	SOMA::PlayMusic("PBGM");
+	SOMA::SetSoundVolume(16);
 	m_playerStartX = m_player->GetSrcP()->x;
 	double adfv = 223;
 	int aaro = 42;
@@ -63,6 +67,7 @@ void PlayState::Enter()
 
 void PlayState::Update()
 {
+	
 	if (m_pauseBtn->Update() == 1)
 		return;
 	if (Engine::Instance().Pause() == true)
@@ -72,40 +77,22 @@ void PlayState::Update()
 		if (m_quitBtn->Update() == 1)
 			return;
 	}
-	if (m_Hp == 7)
-	{
-		Hp[0].GetSrcP()->x = 305;
-	}
-	if (m_Hp == 6)
-	{
-		Hp[0].GetSrcP()->x = 321;
-
-	}
-	if (m_Hp == 5)
-	{
-		Hp[1].GetSrcP()->x = 305;
-
-	}
-	if (m_Hp == 4)
-	{
-		Hp[1].GetSrcP()->x = 321;
-
-	}
-	if (m_Hp == 3)
-	{
-		Hp[2].GetSrcP()->x = 305;
-
-	}
-	if (m_Hp == 2)
-	{
-		Hp[2].GetSrcP()->x = 321;
-
-	}
-	if (m_Hp == 1)
-	{
-		Hp[3].GetSrcP()->x = 305;
-
-	}
+	
+	int xpos = 289;
+	if (m_Hp % 2 == 0)
+			xpos = 321;
+	if (m_Hp % 2 == 1)
+		xpos = 305;
+	
+		if(m_Hp == 6 || m_Hp == 7)
+			Hp[0].GetSrcP()->x = xpos;
+		else if (m_Hp == 5 || m_Hp == 4)
+			Hp[1].GetSrcP()->x = xpos;
+		else if (m_Hp == 3 || m_Hp == 2)
+			Hp[2].GetSrcP()->x = xpos;
+		else if (m_Hp == 1)
+			Hp[3].GetSrcP()->x = xpos;
+	
 	if (m_Hp == 0)
 	{
 		Hp[3].GetSrcP()->x = 321;
@@ -113,11 +100,7 @@ void PlayState::Update()
 		m_player->GetSrcP()->y = 82;
 		m_player->GetSrcP()->w = 10;
 		m_player->GetSrcP()->h = 16;
-
 	}
-
-
-
 
 	if (EVMA::KeyHeld(SDL_SCANCODE_X))
 	{
@@ -224,8 +207,10 @@ void PlayState::Update()
 		if (m_bEBNull) CleanVector<Bullet*>(m_vEBullets, m_bEBNull);
 		CheckCollision();
 	}
-	
-
+	if (m_Hp == 0)
+	{
+		STMA::ChangeState(new LoseState);	
+	}
 }
 
 void PlayState::CheckCollision()
@@ -365,6 +350,7 @@ void PlayState::Render()
 
 void PlayState::Exit()
 {
+	SOMA::StopMusic();
 	delete m_player;
 	m_player = nullptr;
 
@@ -375,10 +361,7 @@ void PlayState::Resume()
 
 }
 
-TitleState::TitleState() {
-
-
-}
+TitleState::TitleState() {}
 
 void TitleState::Enter()
 {
@@ -390,7 +373,9 @@ void TitleState::Enter()
 	}
 	m_playBtn = new PlayButton({ 0,0,480,140 }, { 400, 768 / 2,240,70 });
 	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
-
+	SOMA::Load("Aud/hard-nes.wav", "TBGM", SOUND_MUSIC);
+	SOMA::SetMusicVolume(15);
+	SOMA::PlayMusic("TBGM");
 }
 
 void TitleState::Update()
@@ -460,5 +445,31 @@ void TitleState::Render()
 
 void TitleState::Exit()
 {
+	SOMA::StopMusic();
 	std::cout << "Exiting TitleState..." << std::endl;
+}
+
+LoseState::LoseState() {}
+
+void LoseState::Update()
+{
+	if (m_MenuBtn->Update() == 1)
+		return;
+}
+
+void LoseState::Render()
+{
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), NULL, NULL);
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+		m_MenuBtn->GetSrcP(), m_MenuBtn->GetDstP());
+	State::Render();
+}
+
+void LoseState::Enter()
+{
+	m_MenuBtn = new MenuButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
+}
+
+void LoseState::Exit()
+{
 }
