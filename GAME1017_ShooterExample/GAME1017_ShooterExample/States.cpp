@@ -60,13 +60,10 @@ void PlayState::Enter()
 	
 	pressEnter = new Label("Font1", WIDTH / 2 - 200, HEIGHT / 2, "Press Enter");
 	
-	SOMA::SetMusicVolume(15);
+	SOMA::SetMusicVolume(Engine::Instance().getvol());
 	SOMA::PlayMusic("PBGM");
-	SOMA::SetSoundVolume(16);
+	SOMA::SetSoundVolume(Engine::Instance().getvol());
 	m_playerStartX = m_player->GetSrcP()->x;
-	double adfv = 223;
-	int aaro = 42;
-	int arfg = 24; 
 }
 
 void PlayState::Update()
@@ -153,13 +150,21 @@ void PlayState::Update()
 		{
 			SOMA::SetSoundVolume(0);
 			if (EVMA::KeyHeld(SDL_SCANCODE_KP_ENTER) || EVMA::KeyHeld(SDL_SCANCODE_RETURN))
-			{
-				
+			{		
 				m_loseState = true;
 			}
 		}
-	
-
+		//Volume Control
+		if (EVMA::KeyHeld(SDL_SCANCODE_MINUS))
+		{
+			SOMA::SetAllVolume(Engine::Instance().setvol(-1));
+			std::cout << Engine::Instance().getvol() << endl;
+		}
+		else if (EVMA::KeyHeld(SDL_SCANCODE_EQUALS))
+		{
+			SOMA::SetAllVolume(Engine::Instance().setvol(1));
+			std::cout << Engine::Instance().getvol() << endl;
+		}
 
 		if (EVMA::KeyHeld(SDL_SCANCODE_SPACE) && m_bCanShoot)
 		{
@@ -433,6 +438,16 @@ void TitleState::Update()
 		return;
 	if (m_quitBtn->Update() == 1)
 		return;
+	if (EVMA::KeyHeld(SDL_SCANCODE_MINUS))
+	{
+		SOMA::SetAllVolume(Engine::Instance().setvol(-1));
+		std::cout << Engine::Instance().getvol() << endl;
+	}
+	else if (EVMA::KeyHeld(SDL_SCANCODE_EQUALS))
+	{
+		SOMA::SetAllVolume(Engine::Instance().setvol(1));
+		std::cout << Engine::Instance().getvol() << endl;
+	}
 }
 
 void TitleState::Render()

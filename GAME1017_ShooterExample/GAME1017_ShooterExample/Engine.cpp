@@ -164,4 +164,15 @@ bool& Engine::Dead()
 	return m_dead;
 }
 
+int& Engine::setvol(int v)
+{
+	m_volControl = m_volControl + v;
+	return m_volControl;
+}
+
+int& Engine::getvol()
+{
+	return m_volControl;
+}
+
 

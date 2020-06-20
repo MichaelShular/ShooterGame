@@ -23,7 +23,7 @@ private: // Private properties.
 	SDL_Window* m_pWindow; // This represents the SDL window.
 	SDL_Renderer* m_pRenderer; // This represents the buffer to draw to.
 	bool m_pPause, m_dead;
-
+	int m_volControl = 15;
 
 private: // Private methods.
 	bool Init(const char* title, int xpos, int ypos, int width, int height, int flags);
@@ -44,5 +44,6 @@ public: // Public methods.
 	bool& Running();
 	bool& Pause();
 	bool& Dead();
-	
+	int& setvol(int v);
+	int& getvol();
 };
