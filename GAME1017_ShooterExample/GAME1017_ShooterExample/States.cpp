@@ -52,12 +52,13 @@ void PlayState::Enter()
 	SOMA::Load("Aud/game_sound.wav", "PBGM", SOUND_MUSIC);
 	FOMA::RegisterFont("Ttf/LTYPE.TTF", "Font1", 150);
 	
-	m_pauseBtn = new PauseButton({ 0,0,480,140 }, { 0, HEIGHT, 240,60 });
-	m_resumeBtn = new ResumeButton({ 0,0,480,140 }, { 520, 230, 240,70 });
-	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 520, 300, 240, 70 });
+	m_pauseBtn = new PauseButton({ 1178,95,66,16 }, { 10, 736, 198,48 });
+	m_resumeBtn = new ResumeButton({ 1178,95,66,16 }, { 541, 288 ,198,48 });
+	m_quitBtn = new QuitButton({ 1178,95,66,16 }, { 541, 384 ,198,48 });
 	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
+	m_volIn = new VolInButton({ 598, 82, 11, 11 }, { 607, 732, 55, 55 });
+	m_volDe = new VolDeButton({ 584, 85, 11, 5 }, { 673, 737, 55, 50 });
 	gameOver = new Label("Font1", WIDTH / 2 - 500, HEIGHT / 2 - 200, "YOU ARE DEAD");
-	
 	pressEnter = new Label("Font1", WIDTH / 2 - 200, HEIGHT / 2, "Press Enter");
 	
 	SOMA::SetMusicVolume(Engine::Instance().getvol());
@@ -322,13 +323,18 @@ void PlayState::Render()
 	{
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeClose"), bgArray[i + 12].GetSrcP(), bgArray[i + 12].GetDstP());
 	}
+	//for volume
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
+		m_volIn->GetSrcP(), m_volIn->GetDstP());
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
+		m_volDe->GetSrcP(), m_volDe->GetDstP());
 	//Pause Btn TODO: Change sprite
 	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_player->GetSrcP(), m_player->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
 	if (Engine::Instance().Dead() == false)
 	{
 		if (Engine::Instance().Pause() == false)
 		{
-			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
 				m_pauseBtn->GetSrcP(), m_pauseBtn->GetDstP());
 		}
 		for (int i = 0; i < 4; ++i)
@@ -363,9 +369,9 @@ void PlayState::Render()
 		// Resume and quit Btn
 		if (Engine::Instance().Pause() == true)
 		{
-			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
 				m_quitBtn->GetSrcP(), m_quitBtn->GetDstP());
-			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"),
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
 				m_resumeBtn->GetSrcP(), m_resumeBtn->GetDstP());
 		}
 	}
@@ -403,8 +409,10 @@ void TitleState::Enter()
 		bgArray[f * 3 + 1] = { {0,0,1280,720}, {1280, 0, 1280, 720} };
 		bgArray[f * 3 + 2] = { {0,0,1280,720}, {-1280, 0, 1280, 720} };
 	}
-	m_playBtn = new PlayButton({ 0,0,480,140 }, { 400, 768 / 2,240,70 });
-	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
+	m_playBtn = new PlayButton({ 1178,95,66,16 }, { 541, 288 ,198,48});
+	m_quitBtn = new QuitButton({ 1178,95,66,16 }, { 541, 384 ,198,48 });
+	m_volIn = new VolInButton({598, 82, 11, 11}, { 1148, 732, 55, 55 });
+	m_volDe = new VolDeButton({584, 85, 11, 5}, { 1214, 737, 55, 50 });
 	SOMA::Load("Aud/hard-nes.wav", "TBGM", SOUND_MUSIC);
 	SOMA::SetMusicVolume(15);
 	SOMA::PlayMusic("TBGM");
@@ -437,6 +445,10 @@ void TitleState::Update()
 	if (m_playBtn->Update() == 1)
 		return;
 	if (m_quitBtn->Update() == 1)
+		return;
+	if (m_volIn->Update() == 1)
+		return;
+	if (m_volDe->Update() == 1)
 		return;
 	if (EVMA::KeyHeld(SDL_SCANCODE_MINUS))
 	{
@@ -473,10 +485,14 @@ void TitleState::Render()
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeClose"), bgArray[i + 12].GetSrcP(), bgArray[i + 12].GetDstP());
 	}
 	
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"), 
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"), 
 		m_playBtn->GetSrcP(), m_playBtn->GetDstP());
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
 		m_quitBtn->GetSrcP(), m_quitBtn->GetDstP());
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
+		m_volIn->GetSrcP(), m_volIn->GetDstP());
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
+		m_volDe->GetSrcP(), m_volDe->GetDstP());
 	State::Render();
 
 	//SDL_SetRenderDrawColor(Engine::Instance().GetRenderer(), 128, 0, 255, 255);
@@ -502,14 +518,14 @@ void LoseState::Update()
 void LoseState::Render()
 {
 	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("titleBG"), NULL, NULL);
-	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+	SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("Button"),
 		m_MenuBtn->GetSrcP(), m_MenuBtn->GetDstP());
 	State::Render();
 }
 
 void LoseState::Enter()
 {
-	m_MenuBtn = new MenuButton({ 0,0,480,140 }, { 640, 768 / 2,240,70 });
+	m_MenuBtn = new MenuButton({ 1178,95,66,16 }, { 541, 336, 198,48 });
 }
 
 void LoseState::Exit()

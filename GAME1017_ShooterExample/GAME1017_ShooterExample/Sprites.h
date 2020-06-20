@@ -111,3 +111,17 @@ private:
 public:
 	MenuButton(SDL_Rect src, SDL_Rect dst);
 };
+class VolInButton : public Button
+{
+private:
+	void Execute();
+public:
+	VolInButton(SDL_Rect src, SDL_Rect dst);
+};
+class VolDeButton : public Button
+{
+private:
+	void Execute();
+public:
+	VolDeButton(SDL_Rect src, SDL_Rect dst);
+};

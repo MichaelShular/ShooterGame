@@ -151,3 +151,17 @@ void MenuButton::Execute()
 }
 
 MenuButton::MenuButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void VolInButton::Execute()
+{
+	SOMA::SetAllVolume(Engine::Instance().setvol(2));
+}
+
+VolInButton::VolInButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
+
+void VolDeButton::Execute()
+{
+	SOMA::SetAllVolume(Engine::Instance().setvol(-2));
+}
+
+VolDeButton::VolDeButton(SDL_Rect src, SDL_Rect dst) : Button(src, dst) {}

@@ -41,6 +41,8 @@ private:
 	Button* m_pauseBtn;
 	Button* m_resumeBtn;
 	Button* m_quitBtn;
+	Button* m_volIn;
+	Button* m_volDe;
 public:
 	PlayState();
 	void Update();
@@ -63,6 +65,8 @@ public:
 private:
 	Button* m_playBtn;
 	Button* m_quitBtn;
+	Button* m_volIn;
+	Button* m_volDe;
 	Sprite bgArray[15];
 	int m_srollBG[5] = { 1, 2, 4, 5, 6 };
 };
