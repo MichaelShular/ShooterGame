@@ -23,8 +23,12 @@ public:
 class PlayState : public State
 {
 private:
-	Label* gameOver;
-	Label* pressEnter;
+	Label* gameOver,
+		* pressEnter,
+		* pause,
+		* resume,
+		* quit;
+	
 	Sprite Hp[4];
 	Sprite bgArray[15];
 	Player* m_player;
@@ -32,7 +36,8 @@ private:
 	int m_iESpawn, // The enemy spawn frame timer properties.
 		m_iESpawnMax,
 		m_playerStartX, // need for animations that dont start at zero x 
-		m_Hp;
+		m_Hp,
+		m_Score;
 	bool m_bENull, m_bPBNull, m_bEBNull, m_bCanShoot, m_loseState;
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;
@@ -63,6 +68,7 @@ public:
 	void Enter();
 	void Exit();
 private:
+	Label* play, * quit;
 	Button* m_playBtn;
 	Button* m_quitBtn;
 	Button* m_volIn;
@@ -73,6 +79,7 @@ private:
 class LoseState : public State
 {
 private:
+	Label* menu;
 	Button* m_MenuBtn;
 public:
 	LoseState();

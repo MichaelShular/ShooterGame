@@ -3,13 +3,8 @@
 
 void FontManager::RegisterFont(const char * path, const std::string key, const int size)
 {
-	if (!TTF_WasInit() && TTF_Init() == 0)
-		std::cout << "Font init success!" << std::endl;
-	else 
-	{
-		std::cout << "Font init failed: Error - " << TTF_GetError() << std::endl;
-		return;
-	}
+	TTF_Init();
+
 	TTF_Font* temp = TTF_OpenFont(path, size);
 	if (temp == nullptr)
 		std::cout << "Could not load font: Error - " << TTF_GetError() << std::endl;

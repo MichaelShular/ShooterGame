@@ -110,7 +110,9 @@ int Button::Update()
 		}
 		break;
 	}
+	m_rSrc.x = m_rSrc.w * (int)m_state;
 	return 0;
+	
 }
 
 PlayButton::PlayButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
@@ -135,6 +137,7 @@ PauseButton::PauseButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
 
 void PauseButton::Execute()
 {
+	SOMA::PlaySound("laser");
 	Engine::Instance().Pause() = true;
 }
 
@@ -142,11 +145,13 @@ ResumeButton::ResumeButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
 
 void ResumeButton::Execute()
 {
+	SOMA::PlaySound("laser");
 	Engine::Instance().Pause() = false;
 }
 
 void MenuButton::Execute()
 {
+	SOMA::PlaySound("laser");
 	STMA::ChangeState(new TitleState);
 }
 
@@ -154,6 +159,7 @@ MenuButton::MenuButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
 
 void VolInButton::Execute()
 {
+	SOMA::PlaySound("laser");
 	SOMA::SetAllVolume(Engine::Instance().setvol(2));
 }
 
@@ -161,6 +167,7 @@ VolInButton::VolInButton(SDL_Rect src, SDL_Rect dst) :Button(src, dst) {}
 
 void VolDeButton::Execute()
 {
+	SOMA::PlaySound("laser");
 	SOMA::SetAllVolume(Engine::Instance().setvol(-2));
 }
 

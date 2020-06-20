@@ -34,6 +34,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 				EVMA::Init();
 				SOMA::Init();
 				TEMA::Init();
+				
 			
 			}
 			else return false; // Renderer init fail.
@@ -54,6 +55,13 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	TEMA::RegisterTexture("Img/parallax-mountain-mountains.png", "montainClose");
 	TEMA::RegisterTexture("Img/parallax-mountain-trees.png", "treeFar");
 	TEMA::RegisterTexture("Img/Kit Pixel Art.png", "Button");
+	FOMA::RegisterFont("Ttf/Munro.ttf", "Font1", 150);
+	FOMA::RegisterFont("Ttf/LTYPE.TTF", "Font2", 75);
+	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
+	SOMA::Load("Aud/enemy.wav", "enemy", SOUND_SFX);
+	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
+	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
+	SOMA::Load("Aud/game_sound.wav", "PBGM", SOUND_MUSIC);
 	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Success!" << endl;
