@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "Sprites.h"
+#include "Label.h"
 
 
 
@@ -22,6 +23,8 @@ public:
 class PlayState : public State
 {
 private:
+	Label* gameOver;
+	Label* pressEnter;
 	Sprite Hp[4];
 	Sprite bgArray[15];
 	Player* m_player;
@@ -30,7 +33,7 @@ private:
 		m_iESpawnMax,
 		m_playerStartX, // need for animations that dont start at zero x 
 		m_Hp;
-	bool m_bENull, m_bPBNull, m_bEBNull, m_bCanShoot;
+	bool m_bENull, m_bPBNull, m_bEBNull, m_bCanShoot, m_loseState;
 	std::vector<Enemy*> m_vEnemies;
 	std::vector<Bullet*> m_vPBullets;
 	std::vector<Bullet*> m_vEBullets;

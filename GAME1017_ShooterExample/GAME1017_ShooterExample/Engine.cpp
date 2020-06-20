@@ -14,7 +14,7 @@ Engine::Engine()
 {	// Again showing a mix of either initializers or in-body initialization. Initializers happen first.
 	m_bRunning = false; // Setting all to false.
 	cout << "Engine class constructed!" << endl; 
-	m_pPause = false;
+	m_pPause = m_dead = false;
 }
 Engine::~Engine(){}
 
@@ -157,6 +157,11 @@ bool& Engine::Running()
 bool& Engine::Pause()
 {
 	return m_pPause;
+}
+
+bool& Engine::Dead()
+{
+	return m_dead;
 }
 
 

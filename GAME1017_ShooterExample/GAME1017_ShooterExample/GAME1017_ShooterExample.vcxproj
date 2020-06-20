@@ -119,6 +119,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FontManager.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="StateManager.h" />

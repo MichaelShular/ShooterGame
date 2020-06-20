@@ -27,7 +27,7 @@ void State::Resume() {}
 PlayState::PlayState() :m_iESpawn(0), m_iESpawnMax(60), m_pivot({ 0,0 }) {
 	m_bEBNull = false;
 	m_bENull = false;
-	m_bPBNull = false;
+	m_bPBNull =  m_loseState = false;
 	m_bCanShoot = true;
 	m_Hp = 8;
 	srand((unsigned)time(NULL));
@@ -46,16 +46,20 @@ void PlayState::Enter()
 	Hp[1] = { { 289, 258, 13, 12 }, { 1070 , 725, 65, 60 } };
 	Hp[2] = { { 289, 258, 13, 12 }, { 1140 , 725, 65, 60 } };
 	Hp[3] = { { 289, 258, 13, 12 }, { 1210 , 725, 65, 60 } };
-		
-	m_pauseBtn = new PauseButton({ 0,0,480,140 }, { 0, HEIGHT, 240,60 });
-	m_resumeBtn = new ResumeButton({ 0,0,480,140 }, { 520, 230, 240,70 });
-	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 520, 300, 240, 70 });
-
-	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
 	SOMA::Load("Aud/enemy.wav", "enemy", SOUND_SFX);
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
 	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
 	SOMA::Load("Aud/game_sound.wav", "PBGM", SOUND_MUSIC);
+	FOMA::RegisterFont("Ttf/LTYPE.TTF", "Font1", 150);
+	
+	m_pauseBtn = new PauseButton({ 0,0,480,140 }, { 0, HEIGHT, 240,60 });
+	m_resumeBtn = new ResumeButton({ 0,0,480,140 }, { 520, 230, 240,70 });
+	m_quitBtn = new QuitButton({ 0,0,480,140 }, { 520, 300, 240, 70 });
+	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
+	gameOver = new Label("Font1", WIDTH / 2 - 500, HEIGHT / 2 - 200, "YOU ARE DEAD");
+	
+	pressEnter = new Label("Font1", WIDTH / 2 - 200, HEIGHT / 2, "Press Enter");
+	
 	SOMA::SetMusicVolume(15);
 	SOMA::PlayMusic("PBGM");
 	SOMA::SetSoundVolume(16);
@@ -80,26 +84,26 @@ void PlayState::Update()
 	
 	int xpos = 289;
 	if (m_Hp % 2 == 0)
-			xpos = 321;
+		xpos = 321;
 	if (m_Hp % 2 == 1)
 		xpos = 305;
 	
-		if(m_Hp == 6 || m_Hp == 7)
-			Hp[0].GetSrcP()->x = xpos;
-		else if (m_Hp == 5 || m_Hp == 4)
-			Hp[1].GetSrcP()->x = xpos;
-		else if (m_Hp == 3 || m_Hp == 2)
-			Hp[2].GetSrcP()->x = xpos;
-		else if (m_Hp == 1)
-			Hp[3].GetSrcP()->x = xpos;
-	
-	if (m_Hp == 0)
+	if(m_Hp == 6 || m_Hp == 7)
+		Hp[0].GetSrcP()->x = xpos;
+	else if (m_Hp == 5 || m_Hp == 4)
+		Hp[1].GetSrcP()->x = xpos;
+	else if (m_Hp == 3 || m_Hp == 2)
+		Hp[2].GetSrcP()->x = xpos;
+	else if (m_Hp == 1)
+		Hp[3].GetSrcP()->x = xpos;
+	else if (m_Hp == 0)
 	{
 		Hp[3].GetSrcP()->x = 321;
 		m_player->GetSrcP()->x = 371;
-		m_player->GetSrcP()->y = 82;
+		m_player->GetSrcP()->y = 80;
 		m_player->GetSrcP()->w = 10;
-		m_player->GetSrcP()->h = 16;
+		m_player->GetSrcP()->h = 18;
+		Engine::Instance().Dead() = true;
 	}
 
 	if (EVMA::KeyHeld(SDL_SCANCODE_X))
@@ -145,6 +149,15 @@ void PlayState::Update()
 			m_player->GetDstP()->y -= PSPEED;
 		else if (EVMA::KeyHeld(SDL_SCANCODE_S) && m_player->GetDstP()->y < HEIGHT - m_player->GetDstP()->w)
 			m_player->GetDstP()->y += PSPEED;
+		if (Engine::Instance().Dead() == true)
+		{
+			SOMA::SetSoundVolume(0);
+			if (EVMA::KeyHeld(SDL_SCANCODE_KP_ENTER) || EVMA::KeyHeld(SDL_SCANCODE_RETURN))
+			{
+				
+				m_loseState = true;
+			}
+		}
 	
 
 
@@ -166,6 +179,7 @@ void PlayState::Update()
 			m_vEnemies[i]->Update(); // Oh, again! We're telling the enemies to update themselves. Good good!
 			if (m_vEnemies[i]->GetDstP()->x < -56)
 			{
+
 				delete m_vEnemies[i];
 				m_vEnemies[i] = nullptr;
 				m_bENull = true;
@@ -205,12 +219,16 @@ void PlayState::Update()
 			}
 		}
 		if (m_bEBNull) CleanVector<Bullet*>(m_vEBullets, m_bEBNull);
-		CheckCollision();
+		if (Engine::Instance().Dead() == false)
+			CheckCollision();
 	}
-	if (m_Hp == 0)
+	if (m_loseState)
 	{
-		STMA::ChangeState(new LoseState);	
+		STMA::ChangeState(new LoseState);
 	}
+	
+	
+	
 }
 
 void PlayState::CheckCollision()
@@ -300,47 +318,56 @@ void PlayState::Render()
 		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("treeClose"), bgArray[i + 12].GetSrcP(), bgArray[i + 12].GetDstP());
 	}
 	//Pause Btn TODO: Change sprite
-	if (Engine::Instance().Pause() == false)
+	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_player->GetSrcP(), m_player->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
+	if (Engine::Instance().Dead() == false)
 	{
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
-			m_pauseBtn->GetSrcP(), m_pauseBtn->GetDstP());
-	}
-	for (int i = 0; i < 4; ++i) 
-	{
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), Hp[i].GetSrcP(), Hp[i].GetDstP());
-	}
+		if (Engine::Instance().Pause() == false)
+		{
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+				m_pauseBtn->GetSrcP(), m_pauseBtn->GetDstP());
+		}
+		for (int i = 0; i < 4; ++i)
+		{
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), Hp[i].GetSrcP(), Hp[i].GetDstP());
+		}
 
 
 		// Player.
-	SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_player->GetSrcP(), m_player->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
-	/*SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 128);
-	SDL_RenderFillRect(m_pRenderer, m_player->GetDstP());*/
-	// Player bullets.	
+		
+		/*SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 128);
+		SDL_RenderFillRect(m_pRenderer, m_player->GetDstP());*/
+		// Player bullets.	
 
-	for (int i = 0; i < (int)m_vPBullets.size(); i++)
-	{
-		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("EnergyBall"), m_vPBullets[i]->GetSrcP(), m_vPBullets[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
-		/*SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 128);
-		SDL_RenderFillRect(m_pRenderer, m_vPBullets[i]->GetDstP());*/
+		for (int i = 0; i < (int)m_vPBullets.size(); i++)
+		{
+			SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("EnergyBall"), m_vPBullets[i]->GetSrcP(), m_vPBullets[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_NONE);
+			/*SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 128);
+			SDL_RenderFillRect(m_pRenderer, m_vPBullets[i]->GetDstP());*/
+		}
+		// Enemies.
+		for (int i = 0; i < (int)m_vEnemies.size(); i++)
+		{
+			SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_vEnemies[i]->GetSrcP(), m_vEnemies[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_HORIZONTAL);
+			/*SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 128);
+			SDL_RenderFillRect(m_pRenderer, m_vEnemies[i]->GetDstP());*/
+		}
+		// Enemy bullets.
+		for (int i = 0; i < (int)m_vEBullets.size(); i++)
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("sprites"), m_vEBullets[i]->GetSrcP(), m_vEBullets[i]->GetDstP());
+		// Resume and quit Btn
+		if (Engine::Instance().Pause() == true)
+		{
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
+				m_quitBtn->GetSrcP(), m_quitBtn->GetDstP());
+			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"),
+				m_resumeBtn->GetSrcP(), m_resumeBtn->GetDstP());
+		}
 	}
-	// Enemies.
-	for (int i = 0; i < (int)m_vEnemies.size(); i++)
+	if (Engine::Instance().Dead() == true)
 	{
-		SDL_RenderCopyEx(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), m_vEnemies[i]->GetSrcP(), m_vEnemies[i]->GetDstP(), 0, &m_pivot, SDL_FLIP_HORIZONTAL);
-		/*SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 128);
-		SDL_RenderFillRect(m_pRenderer, m_vEnemies[i]->GetDstP());*/
-	}
-	// Enemy bullets.
-	for (int i = 0; i < (int)m_vEBullets.size(); i++)
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("sprites"), m_vEBullets[i]->GetSrcP(), m_vEBullets[i]->GetDstP());
-	// Resume and quit Btn
-	if (Engine::Instance().Pause() == true)
-	{
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("quit"),
-			m_quitBtn->GetSrcP(), m_quitBtn->GetDstP());
-		SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("play"),
-			m_resumeBtn->GetSrcP(), m_resumeBtn->GetDstP());
+		gameOver->Render();
+		pressEnter->Render();
 	}
 	SDL_RenderPresent(Engine::Instance().GetRenderer());
 	if (dynamic_cast<PlayState*>(STMA::GetStates().back()))
