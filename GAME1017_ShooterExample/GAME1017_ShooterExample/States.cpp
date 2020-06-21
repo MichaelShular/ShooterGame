@@ -47,24 +47,22 @@ void PlayState::Enter()
 	Hp[2] = { { 289, 258, 13, 12 }, { 1140 , 725, 65, 60 } };
 	Hp[3] = { { 289, 258, 13, 12 }, { 1210 , 725, 65, 60 } };
 
-
+	m_scoreString = "SCORE : ";
 	m_pauseBtn = new PauseButton({ 0,0,67,16 }, { 10, 736, 198,48 });
 	m_resumeBtn = new ResumeButton({ 0,0,67,16 }, { 541, 288 ,198,48 });
 	m_volIn = new VolInButton({ 0, 21, 11, 11 }, { 607, 732, 55, 55 });
 	m_volDe = new VolDeButton({ 0, 16, 11, 5 }, { 673, 745, 55, 28 });
 	m_quitBtn = new QuitButton({ 0,0,67,16 }, { 541, 384 ,198,48 });
-	
-	m_player = new Player( { 129, 171, 16, 22 },{ 10, 50, 32, 44} );
-
+	m_player = new Player( { 129, 171, 16, 22 },{ 10, 360, 32, 44} );
 	FOMA::SetSize("Ttf/Munro.ttf", "Font1", 150);
 	gameOver = new Label("Font1", WIDTH / 2 - 400, HEIGHT / 2 - 200, "YOU ARE DEAD");
 	pressEnter = new Label("Font2", WIDTH / 2 - 250, HEIGHT / 2, "Press Enter");
-	
 	FOMA::SetSize("Ttf/Munro.ttf", "Font1", 40);
 	pause = new Label("Font1", 40, 737, "P A U S E", { 0, 0, 0, 0 });
 	resume = new Label("Font1", 558, 289, "R E S U M E", { 0, 0, 0, 0 });
 	quit = new Label("Font1", 575, 385, "Q  U  I  T", { 0, 0, 0, 0 });
-	
+	Score = new Label("Font1", 0, 20, m_scoreString, { 0, 0, 0, 0 });
+	FinalScore = new Label("Font2", WIDTH / 2 - 250, HEIGHT / 2 + 200, "boi");
 	SOMA::SetMusicVolume(Engine::Instance().getvol());
 	SOMA::PlayMusic("PBGM");
 	SOMA::SetSoundVolume(Engine::Instance().getvol());
@@ -73,7 +71,6 @@ void PlayState::Enter()
 
 void PlayState::Update()
 {
-	
 	if (m_pauseBtn->Update() == 1)
 		return;
 	if (m_volIn->Update() == 1)
@@ -86,7 +83,6 @@ void PlayState::Update()
 			return;
 		if (m_quitBtn->Update() == 1)
 			return;
-
 	}
 	
 	int xpos = 289;
@@ -158,6 +154,7 @@ void PlayState::Update()
 			m_player->GetDstP()->y += PSPEED;
 		if (Engine::Instance().Dead() == true)
 		{
+			FinalScore = new Label("Font2", WIDTH / 2 - 250, HEIGHT / 2 + 200, m_newScoreString);
 			SOMA::SetSoundVolume(0);
 			if (EVMA::KeyHeld(SDL_SCANCODE_KP_ENTER) || EVMA::KeyHeld(SDL_SCANCODE_RETURN))
 			{		
@@ -236,14 +233,17 @@ void PlayState::Update()
 		if (m_bEBNull) CleanVector<Bullet*>(m_vEBullets, m_bEBNull);
 		if (Engine::Instance().Dead() == false)
 			CheckCollision();
-	}
+	}	
+	//Score update
+	int x = Engine::Instance().getSco();
+	m_numScore = std::to_string(x);
+	m_newScoreString = m_scoreString + m_numScore;
+	Score->SetText(m_scoreString);
+	Score = new Label("Font1", 0, 20, m_newScoreString, { 0, 0, 0, 0 });
 	if (m_loseState)
 	{
 		STMA::ChangeState(new LoseState);
 	}
-	
-	
-	
 }
 
 void PlayState::CheckCollision()
@@ -262,6 +262,8 @@ void PlayState::CheckCollision()
 			SOMA::PlaySound("explode");
 			m_bENull = true;
 			--m_Hp;
+			if (Engine::Instance().getSco() > 15)
+				Engine::Instance().setSco(-20);
 			break;
 		}
 	}
@@ -283,6 +285,7 @@ void PlayState::CheckCollision()
 				m_vPBullets[i] = nullptr;
 				m_bENull = true;
 				m_bPBNull = true;
+				Engine::Instance().setSco(10);
 				break;
 			}
 		}
@@ -301,6 +304,8 @@ void PlayState::CheckCollision()
 			m_vEBullets[i] = nullptr;
 			CleanVector<Bullet*>(m_vEBullets, m_bEBNull);
 			--m_Hp;
+			if (Engine::Instance().getSco() > 0)
+				Engine::Instance().setSco(-5);
 			break;
 		}
 	}
@@ -352,7 +357,7 @@ void PlayState::Render()
 		{
 			SDL_RenderCopy(Engine::Instance().GetRenderer(), TEMA::GetTexture("0x72"), Hp[i].GetSrcP(), Hp[i].GetDstP());
 		}
-
+		Score->Render();
 
 		// Player.
 		
@@ -393,6 +398,7 @@ void PlayState::Render()
 	{
 		gameOver->Render();
 		pressEnter->Render();
+		FinalScore->Render();
 	}
 	SDL_RenderPresent(Engine::Instance().GetRenderer());
 	if (dynamic_cast<PlayState*>(STMA::GetStates().back()))
@@ -430,10 +436,7 @@ void TitleState::Enter()
 	quit = new Label("Font1", 573, 385, "Q  U  I  T", { 0, 0, 0, 0 });
 	m_volIn = new VolInButton({0, 21, 11, 11}, { 607, 732, 55, 55 });
 	m_volDe = new VolDeButton({0, 16, 11, 5}, { 673, 745, 55, 28 });
-
-
-
-	SOMA::SetMusicVolume(15);
+	SOMA::SetMusicVolume(20);
 	SOMA::PlayMusic("TBGM");
 }
 

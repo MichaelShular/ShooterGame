@@ -27,8 +27,9 @@ private:
 		* pressEnter,
 		* pause,
 		* resume,
-		* quit;
-	
+		* quit,
+		* Score,
+		* FinalScore;
 	Sprite Hp[4];
 	Sprite bgArray[15];
 	Player* m_player;
@@ -48,6 +49,7 @@ private:
 	Button* m_quitBtn;
 	Button* m_volIn;
 	Button* m_volDe;
+	std::string m_scoreString, m_numScore, m_newScoreString;
 public:
 	PlayState();
 	void Update();

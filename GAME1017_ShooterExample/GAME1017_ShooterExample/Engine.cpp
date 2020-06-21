@@ -62,6 +62,7 @@ bool Engine::Init(const char* title, int xpos, int ypos, int width, int height, 
 	SOMA::Load("Aud/explode.wav", "explode", SOUND_SFX);
 	SOMA::Load("Aud/laser.wav", "laser", SOUND_SFX);
 	SOMA::Load("Aud/game_sound.wav", "PBGM", SOUND_MUSIC);
+	SOMA::Load("Aud/hard-nes.wav", "TBGM", SOUND_MUSIC);
 	STMA::ChangeState(new TitleState);
 	m_bRunning = true; // Everything is okay, start the engine.
 	cout << "Success!" << endl;
@@ -182,6 +183,18 @@ int& Engine::setvol(int v)
 int& Engine::getvol()
 {
 	return m_volControl;
+}
+
+int& Engine::setSco(int s)
+{
+	if(Engine::Instance().getSco() >= 0)
+		m_score = m_score + s;
+	return m_score;
+}
+
+int Engine::getSco()
+{
+	return m_score;
 }
 
 
